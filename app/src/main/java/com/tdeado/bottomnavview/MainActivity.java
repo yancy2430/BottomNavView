@@ -1,9 +1,10 @@
 package com.tdeado.bottomnavview;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.tdeado.bottomnav.BottomItem;
 import com.tdeado.bottomnav.BottomMenuView;
