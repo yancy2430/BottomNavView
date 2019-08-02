@@ -35,7 +35,7 @@
 ##设置数据
 
     BottomMenuView bottom_group = (BottomMenuView) findViewById(R.id.bottom_group);
-    bottom_group.setBottomItem(List<BottomItem> bottomItems)
+    bottom_group.setBottomItem(List<BottomItem> menuItems)
     
 ##设置监听器
 
@@ -63,4 +63,4 @@
     setImgPadding(int imgPadding)设置图片内边距
     setImgColor(int imgColor) 设置图标选择颜色
     setImgDefaultColor(int imgDefaultColor) 设置图标默认颜色
-    setBottomItem(List<BottomItem> bottomItems) 设置数据
+    setBottomItem(List<BottomItem> menuItems) 设置数据

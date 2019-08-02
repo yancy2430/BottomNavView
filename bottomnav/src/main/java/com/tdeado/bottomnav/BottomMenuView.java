@@ -29,7 +29,7 @@ public class BottomMenuView extends LinearLayout implements View.OnClickListener
     private int imgDefaultColor = 0xff565656;//默认图片颜色
     private float textSize = 12; //字体大小
     private int imgPadding = 12; //内边距
-    private List<BottomItem> bottomItems;//Item列表
+    private List<MenuItem> menuItems;//Item列表
     private List<Button> buttons;//buttom列表
     private int width;
     private int hight;
@@ -53,24 +53,24 @@ public class BottomMenuView extends LinearLayout implements View.OnClickListener
     }
     /**
      * 传入button列表
-     * @param bottomItems
+     * @param menuItems
      */
-    public void setBottomItem(List<BottomItem> bottomItems){
-        this.bottomItems = bottomItems;
-        for (int i = 0; i < bottomItems.size(); i++) {
+    public void setBottomItem(List<MenuItem> menuItems){
+        this.menuItems = menuItems;
+        for (int i = 0; i < menuItems.size(); i++) {
 //            Button buttom = (Button) LayoutInflater.from(mContext).inflate(R.layout.bottom_menu_item, null);
             Button buttom = new Button(mContext);
             LayoutParams layoutParams = new LayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             buttom.setLayoutParams(layoutParams);
             buttom.setGravity(Gravity.CENTER);
-            buttom.setText(bottomItems.get(i).getName());
+            buttom.setText(menuItems.get(i).getName());
             buttom.setTextSize(textSize);
             buttom.setPadding(imgPadding,imgPadding,imgPadding,imgPadding);
             buttom.setBackground(null);
-            Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(),bottomItems.get(i).getIcon());
+            Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), menuItems.get(i).getIcon());
             Drawable drawable = new BitmapDrawable(getResources(),tintBitmap(bitmap,imgDefaultColor));
             buttom.setCompoundDrawablesWithIntrinsicBounds(null,drawable,null,null);
-            buttom.setTag(bottomItems.get(i));
+            buttom.setTag(menuItems.get(i));
             buttom.setOnClickListener(this);
             addView(buttom);
             buttons.add(buttom);
@@ -84,7 +84,7 @@ public class BottomMenuView extends LinearLayout implements View.OnClickListener
         if (!isShow){
             for (int i = 0; i < getChildCount(); i++) {
                 LinearLayout.LayoutParams ll = (LayoutParams) getChildAt(i).getLayoutParams();
-                ll.width=width/bottomItems.size();
+                ll.width=width/ menuItems.size();
                 getChildAt(i).setLayoutParams(ll);
             }
             isShow=true;
@@ -93,9 +93,9 @@ public class BottomMenuView extends LinearLayout implements View.OnClickListener
 
     public void setShowIndex(int index){
         if (buttons.size()!=0){
-            BottomItem bottomItem = (BottomItem) buttons.get(index).getTag();
-            getBitmap(buttons.get(index),bottomItem.getIcon(),imgColor);
-            bottomItemOnClickListener.bottomItemOnClick(buttons.get(index),index,bottomItem);
+            MenuItem menuItem = (MenuItem) buttons.get(index).getTag();
+            getBitmap(buttons.get(index), menuItem.getIcon(),imgColor);
+            bottomItemOnClickListener.bottomItemOnClick(buttons.get(index),index, menuItem);
         }
     }
 
@@ -126,16 +126,15 @@ public class BottomMenuView extends LinearLayout implements View.OnClickListener
     @Override
     public void onClick(View view) {
         for (int i = 0; i < buttons.size(); i++) {
-            BottomItem bottomItem = (BottomItem) buttons.get(i).getTag();
-            getBitmap(buttons.get(i),bottomItem.getIcon(),imgDefaultColor);
+            MenuItem menuItem = (MenuItem) buttons.get(i).getTag();
+            getBitmap(buttons.get(i), menuItem.getIcon(),imgDefaultColor);
             if (buttons.get(i).getTag()==view.getTag()){
-                getBitmap(buttons.get(i),bottomItem.getIcon(),imgColor);
+                getBitmap(buttons.get(i), menuItem.getIcon(),imgColor);
                 if (bottomItemOnClickListener != null) {
-                    bottomItemOnClickListener.bottomItemOnClick(view,i,bottomItem);
+                    bottomItemOnClickListener.bottomItemOnClick(view,i, menuItem);
                 }
             }
         }
-
     }
     public BottomItemOnClickListener getBottomItemOnClickListener() {
         return bottomItemOnClickListener;
@@ -147,7 +146,7 @@ public class BottomMenuView extends LinearLayout implements View.OnClickListener
      * 监听回调接口
      */
     public interface BottomItemOnClickListener{
-        void bottomItemOnClick(View view, int i,BottomItem item);
+        void bottomItemOnClick(View view, int i, MenuItem item);
     }
     /**
      * 改变颜色
